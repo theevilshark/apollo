@@ -23,9 +23,7 @@ namespace ClickerGame
     /// </summary>
     public partial class MainWindow : Window
     {
-        Int32 wood;
-        DispatcherTimer timer;
-        DoubleAnimation buttonWidthAnimation;
+        WoodManager woodManager;
 
         public MainWindow()
         {
@@ -35,38 +33,25 @@ namespace ClickerGame
 
         private void OnWindowLoaded(object sender, RoutedEventArgs e)
         {
-            timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(2) };
-            timer.Tick += Timer_Tick;
-            this.SizeChanged += OnWindowSizeChanged;
-
-            buttonWidthAnimation = new DoubleAnimation
-            {
-                From = 0,
-                To = WoodButton.ActualWidth,
-                Duration = timer.Interval,
-                EasingFunction = new QuarticEase(),
-                FillBehavior = FillBehavior.Stop
-            };
-        }
-
-        private void Timer_Tick(object sender, EventArgs e)
-        {
-            WoodButton.IsEnabled = true;
-            timer.Stop();
+            woodManager = new WoodManager(2, this.WoodButton, this);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            WoodDisplay.Text = (++wood).ToString();
-            WoodButton.IsEnabled = false;
-            timer.Start();
-            WoodButton.BeginAnimation(WidthProperty, buttonWidthAnimation);
+            switch (((Button) sender).Name)
+            {
+                case "WoodButton":
+                    WoodDisplay.Text = (++woodManager.Wood).ToString();
+                    WoodButton.IsEnabled = false;
+                    woodManager.Timer.Start();
+                    WoodButton.BeginAnimation(WidthProperty, woodManager.ButtonWidthAnimation);
+                    break;
+
+                default:
+                    break;
+            }
         }
 
-        private void OnWindowSizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            WoodButton.Width = e.NewSize.Width - 8;
-            buttonWidthAnimation.To = e.NewSize.Width - 8;
-        }
+        
     }
 }
