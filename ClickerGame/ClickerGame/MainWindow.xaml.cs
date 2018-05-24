@@ -45,7 +45,6 @@ namespace ClickerGame
             switch (((Button)sender).Name)
             {
                 case "WoodButton":
-                    _viewModel.Wood++;
                     WoodButton.IsEnabled = false;
                     woodManager.Timer.Start();
                     WoodButton.BeginAnimation(WidthProperty, woodManager.ButtonWidthAnimation);

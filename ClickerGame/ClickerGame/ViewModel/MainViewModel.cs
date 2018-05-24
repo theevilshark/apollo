@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace ClickerGame.ViewModel
 {
@@ -21,5 +22,7 @@ namespace ClickerGame.ViewModel
                 NotifyPropertyChanged();
             }
         }
+
+        public ICommand Increment => new DelegateCommand(() => Wood++);
     }
 }

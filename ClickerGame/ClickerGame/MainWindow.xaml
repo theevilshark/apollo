@@ -12,6 +12,6 @@
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Wood}"/>
-        <Button x:Name="WoodButton" Grid.Row="1" Content="Chop Wood" Click="Button_Click"/>
+        <Button x:Name="WoodButton" Grid.Row="1" Content="Chop Wood" Command="{Binding Increment}" Click="Button_Click"/>
     </Grid>
 </Window>
