@@ -20,7 +20,7 @@ namespace ClickerGame
 
         public WoodManager(int timeInSeconds, Button button, MainWindow window)
         {
-            Timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(2) };
+            Timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(timeInSeconds) };
             Timer.Tick += Timer_Tick;
             buttonControl = button;
             SetButtonAnimation();
