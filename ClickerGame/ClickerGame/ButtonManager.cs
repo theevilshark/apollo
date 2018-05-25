@@ -14,15 +14,13 @@ namespace ClickerGame
     {
         public DoubleAnimation ButtonWidthAnimation;
         public DispatcherTimer Timer;
-        Button buttonControl;
-        MainWindow mainWindow;
+        private readonly Button buttonControl;
 
         public ButtonManager(Button button, MainWindow window, int timeInSeconds = 5)
         {
             Timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(timeInSeconds) };
             buttonControl = button;
-            mainWindow = window;
-            mainWindow.SizeChanged += OnWindowSizeChanged;
+            window.SizeChanged += OnWindowSizeChanged;
             Timer.Tick += Timer_Tick;
             SetButtonAnimation();
         }
