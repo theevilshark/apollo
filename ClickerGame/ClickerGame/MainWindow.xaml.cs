@@ -24,20 +24,19 @@ namespace ClickerGame
     /// </summary>
     public partial class MainWindow : Window
     {
-        MainViewModel _viewModel;
         ButtonManager woodManager;
 
         public MainWindow()
         {
-            _viewModel = new MainViewModel();
+            var viewModel = new MainViewModel();
             InitializeComponent();
             Loaded += OnWindowLoaded;
-            DataContext = _viewModel;
+            DataContext = viewModel;
         }
 
         private void OnWindowLoaded(object sender, RoutedEventArgs e)
         {
-            woodManager = new ButtonManager(2, WoodButton, this);
+            woodManager = new ButtonManager(WoodButton, this, 2);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

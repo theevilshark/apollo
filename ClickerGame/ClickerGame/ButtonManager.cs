@@ -17,25 +17,14 @@ namespace ClickerGame
         Button buttonControl;
         MainWindow mainWindow;
 
-        public ButtonManager(int timeInSeconds, Button button, MainWindow window)
+        public ButtonManager(Button button, MainWindow window, int timeInSeconds = 5)
         {
             Timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(timeInSeconds) };
-            Timer.Tick += Timer_Tick;
             buttonControl = button;
-            SetButtonAnimation();
-            mainWindow = window;
-
-            mainWindow.SizeChanged += OnWindowSizeChanged;
-        }
-
-        public ButtonManager(Button button, MainWindow window)
-        {
-            Timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(5) };
-            Timer.Tick += Timer_Tick;
-            buttonControl = button;
-            SetButtonAnimation();
             mainWindow = window;
             mainWindow.SizeChanged += OnWindowSizeChanged;
+            Timer.Tick += Timer_Tick;
+            SetButtonAnimation();
         }
 
         private void Timer_Tick(object sender, EventArgs e)
