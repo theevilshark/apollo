@@ -35,7 +35,7 @@ namespace ClickerGame
         {
             ButtonWidthAnimation = new DoubleAnimation
             {
-                From = 0,
+                From = 75,
                 To = buttonControl.ActualWidth,
                 Duration = Timer.Interval,
                 EasingFunction = new QuarticEase(),
@@ -45,8 +45,7 @@ namespace ClickerGame
 
         private void OnWindowSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            buttonControl.Width = e.NewSize.Width - 8;
-            ButtonWidthAnimation.To = e.NewSize.Width - 8;
+            ButtonWidthAnimation.To = buttonControl.ActualWidth;
         }
     }
 }
