@@ -4,15 +4,19 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ClickerGame"
+        xmlns:view="clr-namespace:ClickerGame.View"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
+    <Window.Resources>
+        <view:DoubleToIntConverter x:Key="IntConverter"/>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Wood}"/>
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Wood, Converter={StaticResource IntConverter}}"/>
         <Button x:Name="WoodButton" Grid.Row="1" Content="Chop Wood" Command="{Binding Increment}" Click="Button_Click"/>
         <Button x:Name="LoggerButton" Grid.Row="2" Content="Hire Logger (10 Wood)" IsEnabled="{Binding CanPurchaseLogger}" Command="{Binding PurchaseLogger}"/>
     </Grid>

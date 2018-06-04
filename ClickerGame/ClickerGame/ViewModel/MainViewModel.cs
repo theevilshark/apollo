@@ -1,4 +1,5 @@
-﻿using MvvmUtilities;
+﻿using ClickerGame.Processing;
+using MvvmUtilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,22 +12,25 @@ namespace ClickerGame.ViewModel
 {
     public class MainViewModel : ObservableObject
     {
-        private DispatcherTimer _timer;
+        private const Double TicksPerSecond = 1;
+        private const Double LoggerInterval = 5;
+
         private Int32 _loggers;
-        private Int32 _wood;
+        private Double _wood;
         private Boolean _canPurchaseLogger;
+
+        private GameLoop _loop;
 
         public MainViewModel()
         {
-            _timer = new DispatcherTimer();
-            _timer.Interval = TimeSpan.FromSeconds(5);
-            _timer.Tick += _timer_Tick;
-            _timer.Start();
+            _loop = new GameLoop(TicksPerSecond);
+            _loop.Tick += _loop_Tick;
+            _loop.Start();
         }
 
-        private void _timer_Tick(Object sender, EventArgs e)
+        private void _loop_Tick()
         {
-            Wood += _loggers;
+            Wood += (_loggers / (TicksPerSecond * LoggerInterval));
         }
 
         public Boolean CanPurchaseLogger
@@ -49,7 +53,7 @@ namespace ClickerGame.ViewModel
                 NotifyPropertyChanged();
             }
         }
-        public Int32 Wood
+        public Double Wood
         {
             get { return _wood; }
             set
