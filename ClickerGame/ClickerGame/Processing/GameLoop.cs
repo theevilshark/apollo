@@ -27,7 +27,7 @@ namespace ClickerGame.Processing
             _enabled = true;
             while (_enabled)
             {
-                Tick();
+                Tick(); // TODO This threw an object null reference, keep an eye on this, may need to shift logic.
                 System.Threading.Thread.Sleep(TimeSpan.FromMilliseconds(1000 / _ticksPerSecond));
             }
         }

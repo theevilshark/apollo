@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Buildings\Lumbermill.cs" />
     <Compile Include="ButtonManager.cs" />
     <Compile Include="Processing\GameLoop.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
