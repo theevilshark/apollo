@@ -9,11 +9,12 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ClickerGame</RootNamespace>
     <AssemblyName>ClickerGame</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -55,7 +56,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Buildings\Lumbermill.cs" />
     <Compile Include="ButtonManager.cs" />
     <Compile Include="Processing\GameLoop.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
@@ -104,6 +104,10 @@
     <ProjectReference Include="..\MvvmUtilities\MvvmUtilities.csproj">
       <Project>{C0020E54-6FE9-4A34-A312-F6ACB65407C8}</Project>
       <Name>MvvmUtilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ResourceManagement\ResourceManagement.csproj">
+      <Project>{45f8b4b5-b080-4bce-8f32-297f0e2ff2cb}</Project>
+      <Name>ResourceManagement</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

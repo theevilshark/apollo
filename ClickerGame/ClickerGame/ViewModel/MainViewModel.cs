@@ -1,42 +1,35 @@
-﻿using ClickerGame.Buildings;
-using ClickerGame.Processing;
+﻿using ClickerGame.Processing;
 using MvvmUtilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ResourceManagement.Buildings;
 using System.Windows.Input;
-using System.Windows.Threading;
 
 namespace ClickerGame.ViewModel
 {
     public class MainViewModel : ObservableObject
     {
-        private const Double TicksPerSecond = 1;
-        private const Double GrowthInterval = 5;
+        private const double TicksPerSecond = 1;
+        private const double GrowthInterval = 5;
 
-        private Double _wood;
-        private Boolean _canUpgradeLumbermill;
+        private double _wood;
+        private bool _canUpgradeLumbermill;
 
-        private Lumbermill _lumbermill;
-        private GameLoop _loop;
+        private readonly GameLoop _loop;
 
         public MainViewModel()
         {
-            _lumbermill = new Lumbermill();
+            Lumbermill = new Lumbermill();
 
             _loop = new GameLoop(TicksPerSecond);
-            _loop.Tick += () => Wood += (_lumbermill.Level / (TicksPerSecond * GrowthInterval));
+            _loop.Tick += () => Wood += (Lumbermill.Generate(TicksPerSecond * GrowthInterval));
             _loop.Start();
 
             Wood = 20;
-            CanUpgradeLumbermill = Wood >= _lumbermill.UpgradeCost;
+            CanUpgradeLumbermill = Wood >= Lumbermill.UpgradeCost;
         }
 
-        public Lumbermill Lumbermill => _lumbermill;
+        public Lumbermill Lumbermill { get; private set; }
 
-        public Boolean CanUpgradeLumbermill
+        public bool CanUpgradeLumbermill
         {
             get { return _canUpgradeLumbermill; }
             set
@@ -46,7 +39,7 @@ namespace ClickerGame.ViewModel
                 NotifyPropertyChanged();
             }
         }
-        public Double Wood
+        public double Wood
         {
             get { return _wood; }
             set
@@ -54,15 +47,15 @@ namespace ClickerGame.ViewModel
                 if (_wood == value) return;
                 _wood = value;
                 NotifyPropertyChanged();
-                CanUpgradeLumbermill = Wood >= _lumbermill.UpgradeCost;
+                CanUpgradeLumbermill = Wood >= Lumbermill.UpgradeCost;
             }
         }
 
         public ICommand Increment => new DelegateCommand(() => Wood++);
         public ICommand UpgradeLumbermill => new DelegateCommand(() =>
         {
+            Wood -= Lumbermill.UpgradeCost;
             Lumbermill.Upgrade();
-            Wood -= _lumbermill.UpgradeCost;
             NotifyPropertyChanged("Lumbermill");
         });
     }

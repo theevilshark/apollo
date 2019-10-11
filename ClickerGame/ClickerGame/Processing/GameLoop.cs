@@ -11,10 +11,10 @@ namespace ClickerGame.Processing
         public delegate void TickHandler();
         public event TickHandler Tick;
 
-        private Boolean _enabled;
-        private Double _ticksPerSecond;
+        private bool _enabled;
+        private double _ticksPerSecond;
 
-        public GameLoop(Double ticksPerSecond)
+        public GameLoop(double ticksPerSecond)
         {
             _ticksPerSecond = ticksPerSecond;
         }
