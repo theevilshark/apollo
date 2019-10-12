@@ -1,4 +1,6 @@
-﻿namespace ResourceManagement.Buildings
+﻿using ResourceManagement.Exceptions;
+
+namespace ResourceManagement.Buildings
 {
     public class Lumbermill : IResourceGenerator
     {
@@ -10,13 +12,14 @@
         {
             _resourceCache = resourceCache;
             Level = 0;
-            UpgradeCost = 10;
         }
 
         public int Level { get; private set; }
-        public int UpgradeCost { get; private set; }
 
-        private double GrowthPerSecond => Level / 5;
+        public bool CanBeUpgraded => _resourceCache.Quantity >= UpgradeCost;
+
+        private double GrowthPerSecond => Level / 5d;
+        private int UpgradeCost => (Level + 1) * UpgradeCostGrowth;
 
         public void Generate(double generationPeriod)
         {
@@ -26,9 +29,11 @@
 
         public void Upgrade()
         {
-            Level++;
-            UpgradeCost = (Level + 1) * UpgradeCostGrowth;
+            if (!CanBeUpgraded)
+                throw new UpgradeException("Insufficient resources");
+
             _resourceCache.Apply(UpgradeCost * -1);
+            Level++;
         }
     }
 }

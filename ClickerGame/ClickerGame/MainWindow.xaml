@@ -18,7 +18,7 @@
         </Grid.RowDefinitions>
         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Wood, Converter={StaticResource IntConverter}}"/>
         <Button x:Name="WoodButton" Grid.Row="1" Content="Chop Wood" Command="{Binding Increment}" Click="Button_Click"/>
-        <Button Grid.Row="2" IsEnabled="{Binding CanUpgradeLumbermill}" Command="{Binding UpgradeLumbermill}">
+        <Button Grid.Row="2" IsEnabled="{Binding Lumbermill.CanBeUpgraded}" Command="{Binding UpgradeLumbermill}">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Upgrade Lumbermill level "/>
                 <TextBlock Text="{Binding Lumbermill.Level}"/>

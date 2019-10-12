@@ -11,58 +11,35 @@ namespace ClickerGame.ViewModel
         private const double TicksPerSecond = 1;
 
         private IResourceCache _woodCache;
-        private bool _canUpgradeLumbermill;
 
         private readonly GameLoop _loop;
 
         public MainViewModel()
         {
             var woodCache = new ResourceCache();
-            _woodCache = new ObservableResourceCache(woodCache, () => NotifyPropertyChanged(nameof(Wood)));
+            _woodCache = new ObservableResourceCache(woodCache, () =>
+            {
+                NotifyPropertyChanged(nameof(Wood));
+                NotifyPropertyChanged(nameof(Lumbermill));
+            });
             Lumbermill = new Lumbermill(_woodCache);
 
             _loop = new GameLoop(TicksPerSecond);
             _loop.Tick += () =>
             {
                 Lumbermill.Generate(1 / TicksPerSecond);
-                UpdateCanUpgradeLumbermill();
             };
             _loop.Start();
 
             _woodCache.Apply(20);
-            UpdateCanUpgradeLumbermill();
-        }
-
-        private void UpdateCanUpgradeLumbermill()
-        {
-            CanUpgradeLumbermill = _woodCache.Quantity >= Lumbermill.UpgradeCost;
         }
 
         public Lumbermill Lumbermill { get; private set; }
 
-        public bool CanUpgradeLumbermill
-        {
-            get { return _canUpgradeLumbermill; }
-            set
-            {
-                if (_canUpgradeLumbermill == value) return;
-                _canUpgradeLumbermill = value;
-                NotifyPropertyChanged();
-            }
-        }
         public double Wood => _woodCache.Quantity;
 
-        public ICommand Increment => new DelegateCommand(() =>
-        {
-            _woodCache.Apply(1);
-            UpdateCanUpgradeLumbermill();
-        });
+        public ICommand Increment => new DelegateCommand(() => { _woodCache.Apply(1); });
 
-        public ICommand UpgradeLumbermill => new DelegateCommand(() =>
-        {
-            Lumbermill.Upgrade();
-            UpdateCanUpgradeLumbermill();
-            NotifyPropertyChanged(nameof(Lumbermill));
-        });
+        public ICommand UpgradeLumbermill => new DelegateCommand(() => { Lumbermill.Upgrade(); });
     }
 }
