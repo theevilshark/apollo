@@ -1,19 +1,12 @@
 ﻿namespace ResourceManagement
 {
-    public interface IResourceCache
-    {
-        double Quantity { get; }
-
-        void Apply(double adjustment);
-    }
-
     public class ResourceCache : IResourceCache
     {
         public double Quantity { get; private set; }
 
-        public void Apply(double adjustment)
+        public void Apply(IResourceAdjustment adjustment)
         {
-            Quantity += adjustment;
+            Quantity += adjustment.Quantity;
         }
     }
 }

@@ -6,10 +6,12 @@ namespace ResourceManagement.Buildings
     {
         private const int UpgradeCostGrowth = 10;
 
+        private readonly ResourceAdjustmentFactory _adjustmentFactory;
         private readonly IResourceCache _resourceCache;
 
-        public Lumbermill(IResourceCache resourceCache)
+        public Lumbermill(IResourceCache resourceCache, ResourceAdjustmentFactory adjustmentFactory)
         {
+            _adjustmentFactory = adjustmentFactory;
             _resourceCache = resourceCache;
             Level = 0;
         }
@@ -23,8 +25,8 @@ namespace ResourceManagement.Buildings
 
         public void Generate(double generationPeriod)
         {
-            var generatedQuantity = GrowthPerSecond * generationPeriod;
-            _resourceCache.Apply(generatedQuantity);
+            var adjustment = _adjustmentFactory.CreateIncreaseEqualTo(GrowthPerSecond * generationPeriod);
+            _resourceCache.Apply(adjustment);
         }
 
         public void Upgrade()
@@ -32,9 +34,12 @@ namespace ResourceManagement.Buildings
             if (!CanBeUpgraded)
                 throw new UpgradeException("Insufficient resources");
 
-            var upgradeCost = UpgradeCost;
+            var adjustment = _adjustmentFactory.CreateDecreaseEqualTo(UpgradeCost);
+            // For now ensure level is adjusted before the resource cache is updated
+            // to keep the UI responsive as updates only trigger off the back of resource
+            // updates currently.
             Level++;
-            _resourceCache.Apply(upgradeCost * -1);
+            _resourceCache.Apply(adjustment);
         }
     }
 }

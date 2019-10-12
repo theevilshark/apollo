@@ -42,8 +42,12 @@
   <ItemGroup>
     <Compile Include="Buildings\Lumbermill.cs" />
     <Compile Include="Exceptions\UpgradeException.cs" />
+    <Compile Include="IResourceAdjustment.cs" />
+    <Compile Include="IResourceCache.cs" />
     <Compile Include="IResourceGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResourceAdjustment.cs" />
+    <Compile Include="ResourceAdjustmentFactory.cs" />
     <Compile Include="ResourceCache.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

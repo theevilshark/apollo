@@ -16,7 +16,7 @@ namespace ClickerGame.ViewModel
 
         public double Quantity => _resourceCache.Quantity;
 
-        public void Apply(double adjustment)
+        public void Apply(IResourceAdjustment adjustment)
         {
             _resourceCache.Apply(adjustment);
             _notify();
