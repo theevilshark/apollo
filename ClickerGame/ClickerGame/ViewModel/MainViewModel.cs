@@ -9,7 +9,7 @@ namespace ClickerGame.ViewModel
     public class MainViewModel : ObservableObject
     {
         private const double TicksPerSecond = 1;
-        private const double GrowthInterval = 5;
+        private const double GrowthIntervalInSeconds = 5;
 
         private IResourceCache _woodCache;
         private bool _canUpgradeLumbermill;
@@ -20,13 +20,12 @@ namespace ClickerGame.ViewModel
         {
             var woodCache = new ResourceCache();
             _woodCache = new ObservableResourceCache(woodCache, () => NotifyPropertyChanged(nameof(Wood)));
-            Lumbermill = new Lumbermill();
+            Lumbermill = new Lumbermill(_woodCache);
 
             _loop = new GameLoop(TicksPerSecond);
             _loop.Tick += () =>
             {
-                var generatedWood = Lumbermill.Generate(TicksPerSecond * GrowthInterval);
-                _woodCache.Apply(generatedWood);
+                Lumbermill.Generate(TicksPerSecond * GrowthIntervalInSeconds);
                 UpdateCanUpgradeLumbermill();
             };
             _loop.Start();
@@ -62,9 +61,8 @@ namespace ClickerGame.ViewModel
 
         public ICommand UpgradeLumbermill => new DelegateCommand(() =>
         {
-            _woodCache.Apply(Lumbermill.UpgradeCost * -1);
-            UpdateCanUpgradeLumbermill();
             Lumbermill.Upgrade();
+            UpdateCanUpgradeLumbermill();
             NotifyPropertyChanged(nameof(Lumbermill));
         });
     }

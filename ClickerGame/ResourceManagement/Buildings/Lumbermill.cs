@@ -4,8 +4,11 @@
     {
         private const int UpgradeCostGrowth = 10;
 
-        public Lumbermill()
+        private readonly IResourceCache _resourceCache;
+
+        public Lumbermill(IResourceCache resourceCache)
         {
+            _resourceCache = resourceCache;
             Level = 0;
             UpgradeCost = 10;
         }
@@ -13,15 +16,17 @@
         public int Level { get; private set; }
         public int UpgradeCost { get; private set; }
 
-        public double Generate(double generationPeriod)
+        public void Generate(double generationPeriod)
         {
-            return Level / generationPeriod;
+            var generatedQuantity = Level / generationPeriod;
+            _resourceCache.Apply(generatedQuantity);
         }
 
         public void Upgrade()
         {
             Level++;
             UpgradeCost = (Level + 1) * UpgradeCostGrowth;
+            _resourceCache.Apply(UpgradeCost * -1);
         }
     }
 }
