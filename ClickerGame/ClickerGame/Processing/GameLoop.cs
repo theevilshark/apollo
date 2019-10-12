@@ -5,7 +5,7 @@ namespace ClickerGame.Processing
 {
     public class GameLoop
     {
-        public delegate void TickHandler();
+        public delegate void TickHandler(decimal tickDuration);
         public event TickHandler Tick;
 
         private bool _enabled;
@@ -24,8 +24,11 @@ namespace ClickerGame.Processing
             _enabled = true;
             while (_enabled)
             {
-                Tick(); // TODO This threw an object null reference, keep an eye on this, may need to shift logic.
-                System.Threading.Thread.Sleep(TimeSpan.FromMilliseconds(1000d / _ticksPerSecond));
+                var tickDurationInMilliseconds = 1000 / _ticksPerSecond;
+                var tickDuration = tickDurationInMilliseconds / 1000m;
+                // TODO This threw an object null reference, keep an eye on this, may need to shift logic.
+                Tick(tickDuration);
+                System.Threading.Thread.Sleep(TimeSpan.FromMilliseconds(tickDurationInMilliseconds));
             }
         }
     }

@@ -8,8 +8,6 @@ namespace ClickerGame.ViewModel
 {
     public class MainViewModel : ObservableObject
     {
-        private const int TicksPerSecond = 1;
-
         private readonly DelegateCommandFactory _commandFactory;
         private readonly IResourceCache _woodCache;
         private readonly GameLoop _loop;
@@ -30,10 +28,10 @@ namespace ClickerGame.ViewModel
                 () => _woodCache.Apply(adjustmentFactory.CreateIncreaseEqualTo(1)));
             UpgradeLumbermill = _commandFactory.CreateFor(Lumbermill.Upgrade);
 
-            _loop = new GameLoop(TicksPerSecond);
-            _loop.Tick += () =>
+            _loop = new GameLoop(ticksPerSecond: 100);
+            _loop.Tick += (tickDuration) =>
             {
-                Lumbermill.Generate(1m / TicksPerSecond);
+                Lumbermill.Generate(tickDuration);
             };
             _loop.Start();
 
