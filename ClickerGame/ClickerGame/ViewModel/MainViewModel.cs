@@ -10,19 +10,23 @@ namespace ClickerGame.ViewModel
     {
         private const double TicksPerSecond = 1;
 
-        private IResourceCache _woodCache;
-
+        private readonly DelegateCommandFactory _commandFactory;
+        private readonly IResourceCache _woodCache;
         private readonly GameLoop _loop;
 
         public MainViewModel()
         {
-            var woodCache = new ResourceCache();
-            _woodCache = new ObservableResourceCache(woodCache, () =>
+            _commandFactory = new DelegateCommandFactory();
+
+            _woodCache = new ObservableResourceCache(new ResourceCache(), () =>
             {
                 NotifyPropertyChanged(nameof(Wood));
                 NotifyPropertyChanged(nameof(Lumbermill));
             });
             Lumbermill = new Lumbermill(_woodCache);
+
+            Increment = _commandFactory.CreateFor(() => _woodCache.Apply(1));
+            UpgradeLumbermill = _commandFactory.CreateFor(Lumbermill.Upgrade);
 
             _loop = new GameLoop(TicksPerSecond);
             _loop.Tick += () =>
@@ -38,8 +42,8 @@ namespace ClickerGame.ViewModel
 
         public double Wood => _woodCache.Quantity;
 
-        public ICommand Increment => new DelegateCommand(() => { _woodCache.Apply(1); });
+        public ICommand Increment { get; }
 
-        public ICommand UpgradeLumbermill => new DelegateCommand(() => { Lumbermill.Upgrade(); });
+        public ICommand UpgradeLumbermill { get; }
     }
 }

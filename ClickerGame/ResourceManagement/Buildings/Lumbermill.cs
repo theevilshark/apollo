@@ -17,9 +17,9 @@ namespace ResourceManagement.Buildings
         public int Level { get; private set; }
 
         public bool CanBeUpgraded => _resourceCache.Quantity >= UpgradeCost;
+        public int UpgradeCost => (Level + 1) * UpgradeCostGrowth;
 
         private double GrowthPerSecond => Level / 5d;
-        private int UpgradeCost => (Level + 1) * UpgradeCostGrowth;
 
         public void Generate(double generationPeriod)
         {
@@ -32,8 +32,9 @@ namespace ResourceManagement.Buildings
             if (!CanBeUpgraded)
                 throw new UpgradeException("Insufficient resources");
 
-            _resourceCache.Apply(UpgradeCost * -1);
+            var upgradeCost = UpgradeCost;
             Level++;
+            _resourceCache.Apply(upgradeCost * -1);
         }
     }
 }
