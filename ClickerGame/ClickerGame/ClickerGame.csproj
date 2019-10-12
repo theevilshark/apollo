@@ -59,6 +59,7 @@
     <Compile Include="ButtonManager.cs" />
     <Compile Include="Processing\GameLoop.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\ObservableResourceCache.cs" />
     <Compile Include="View\DoubleToIntConverter.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

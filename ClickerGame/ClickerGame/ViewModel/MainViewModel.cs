@@ -1,5 +1,6 @@
 ﻿using ClickerGame.Processing;
 using MvvmUtilities;
+using ResourceManagement;
 using ResourceManagement.Buildings;
 using System.Windows.Input;
 
@@ -10,21 +11,33 @@ namespace ClickerGame.ViewModel
         private const double TicksPerSecond = 1;
         private const double GrowthInterval = 5;
 
-        private double _wood;
+        private IResourceCache _woodCache;
         private bool _canUpgradeLumbermill;
 
         private readonly GameLoop _loop;
 
         public MainViewModel()
         {
+            var woodCache = new ResourceCache();
+            _woodCache = new ObservableResourceCache(woodCache, () => NotifyPropertyChanged(nameof(Wood)));
             Lumbermill = new Lumbermill();
 
             _loop = new GameLoop(TicksPerSecond);
-            _loop.Tick += () => Wood += (Lumbermill.Generate(TicksPerSecond * GrowthInterval));
+            _loop.Tick += () =>
+            {
+                var generatedWood = Lumbermill.Generate(TicksPerSecond * GrowthInterval);
+                _woodCache.Apply(generatedWood);
+                UpdateCanUpgradeLumbermill();
+            };
             _loop.Start();
 
-            Wood = 20;
-            CanUpgradeLumbermill = Wood >= Lumbermill.UpgradeCost;
+            _woodCache.Apply(20);
+            UpdateCanUpgradeLumbermill();
+        }
+
+        private void UpdateCanUpgradeLumbermill()
+        {
+            CanUpgradeLumbermill = _woodCache.Quantity >= Lumbermill.UpgradeCost;
         }
 
         public Lumbermill Lumbermill { get; private set; }
@@ -39,24 +52,20 @@ namespace ClickerGame.ViewModel
                 NotifyPropertyChanged();
             }
         }
-        public double Wood
-        {
-            get { return _wood; }
-            set
-            {
-                if (_wood == value) return;
-                _wood = value;
-                NotifyPropertyChanged();
-                CanUpgradeLumbermill = Wood >= Lumbermill.UpgradeCost;
-            }
-        }
+        public double Wood => _woodCache.Quantity;
 
-        public ICommand Increment => new DelegateCommand(() => Wood++);
+        public ICommand Increment => new DelegateCommand(() =>
+        {
+            _woodCache.Apply(1);
+            UpdateCanUpgradeLumbermill();
+        });
+
         public ICommand UpgradeLumbermill => new DelegateCommand(() =>
         {
-            Wood -= Lumbermill.UpgradeCost;
+            _woodCache.Apply(Lumbermill.UpgradeCost * -1);
+            UpdateCanUpgradeLumbermill();
             Lumbermill.Upgrade();
-            NotifyPropertyChanged("Lumbermill");
+            NotifyPropertyChanged(nameof(Lumbermill));
         });
     }
 }
