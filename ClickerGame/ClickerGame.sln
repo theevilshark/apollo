@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{408C51
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourceManagement", "ResourceManagement\ResourceManagement.csproj", "{45F8B4B5-B080-4BCE-8F32-297F0E2FF2CB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourceManagmentTests", "ResourceManagmentTests\ResourceManagmentTests.csproj", "{739BF029-78BF-4F64-82E1-B002E908047D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,12 +31,17 @@ Global
 		{45F8B4B5-B080-4BCE-8F32-297F0E2FF2CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45F8B4B5-B080-4BCE-8F32-297F0E2FF2CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45F8B4B5-B080-4BCE-8F32-297F0E2FF2CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{739BF029-78BF-4F64-82E1-B002E908047D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{739BF029-78BF-4F64-82E1-B002E908047D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{739BF029-78BF-4F64-82E1-B002E908047D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{739BF029-78BF-4F64-82E1-B002E908047D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{45F8B4B5-B080-4BCE-8F32-297F0E2FF2CB} = {408C5161-1953-4785-9252-5CD3D1901344}
+		{739BF029-78BF-4F64-82E1-B002E908047D} = {408C5161-1953-4785-9252-5CD3D1901344}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {07BCDB92-3AB4-4B3D-B663-062290D4E4CD}

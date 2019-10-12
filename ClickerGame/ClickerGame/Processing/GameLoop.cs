@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ClickerGame.Processing
@@ -12,9 +9,9 @@ namespace ClickerGame.Processing
         public event TickHandler Tick;
 
         private bool _enabled;
-        private double _ticksPerSecond;
+        private int _ticksPerSecond;
 
-        public GameLoop(double ticksPerSecond)
+        public GameLoop(int ticksPerSecond)
         {
             _ticksPerSecond = ticksPerSecond;
         }
@@ -28,7 +25,7 @@ namespace ClickerGame.Processing
             while (_enabled)
             {
                 Tick(); // TODO This threw an object null reference, keep an eye on this, may need to shift logic.
-                System.Threading.Thread.Sleep(TimeSpan.FromMilliseconds(1000 / _ticksPerSecond));
+                System.Threading.Thread.Sleep(TimeSpan.FromMilliseconds(1000d / _ticksPerSecond));
             }
         }
     }

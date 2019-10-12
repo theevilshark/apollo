@@ -2,6 +2,6 @@
 {
     public interface IResourceAdjustment
     {
-        double Quantity { get; }
+        decimal Quantity { get; }
     }
 }

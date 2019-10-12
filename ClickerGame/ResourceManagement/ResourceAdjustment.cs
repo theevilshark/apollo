@@ -2,8 +2,8 @@
 {
     internal class ResourceAdjustment : IResourceAdjustment
     {
-        public ResourceAdjustment(double quantity) { Quantity = quantity; }
+        public ResourceAdjustment(decimal quantity) { Quantity = quantity; }
 
-        public double Quantity { get; }
+        public decimal Quantity { get; }
     }
 }

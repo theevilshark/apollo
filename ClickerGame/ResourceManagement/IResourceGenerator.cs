@@ -2,6 +2,6 @@
 {
     interface IResourceGenerator
     {
-        void Generate(double generationPeriod);
+        void Generate(decimal generationPeriod);
     }
 }

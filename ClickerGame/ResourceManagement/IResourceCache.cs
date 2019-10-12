@@ -2,7 +2,7 @@
 {
     public interface IResourceCache
     {
-        double Quantity { get; }
+        decimal Quantity { get; }
 
         void Apply(IResourceAdjustment adjustment);
     }

@@ -14,7 +14,7 @@ namespace ClickerGame.ViewModel
             _notify = notify;
         }
 
-        public double Quantity => _resourceCache.Quantity;
+        public decimal Quantity => _resourceCache.Quantity;
 
         public void Apply(IResourceAdjustment adjustment)
         {

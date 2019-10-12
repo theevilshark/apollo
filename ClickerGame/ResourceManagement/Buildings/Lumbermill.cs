@@ -21,9 +21,9 @@ namespace ResourceManagement.Buildings
         public bool CanBeUpgraded => _resourceCache.Quantity >= UpgradeCost;
         public int UpgradeCost => (Level + 1) * UpgradeCostGrowth;
 
-        private double GrowthPerSecond => Level / 5d;
+        private decimal GrowthPerSecond => Level / 5m;
 
-        public void Generate(double generationPeriod)
+        public void Generate(decimal generationPeriod)
         {
             var adjustment = _adjustmentFactory.CreateIncreaseEqualTo(GrowthPerSecond * generationPeriod);
             _resourceCache.Apply(adjustment);
