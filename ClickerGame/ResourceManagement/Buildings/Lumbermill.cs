@@ -16,9 +16,11 @@
         public int Level { get; private set; }
         public int UpgradeCost { get; private set; }
 
+        private double GrowthPerSecond => Level / 5;
+
         public void Generate(double generationPeriod)
         {
-            var generatedQuantity = Level / generationPeriod;
+            var generatedQuantity = GrowthPerSecond * generationPeriod;
             _resourceCache.Apply(generatedQuantity);
         }
 

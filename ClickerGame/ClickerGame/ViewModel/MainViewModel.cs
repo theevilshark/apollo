@@ -9,7 +9,6 @@ namespace ClickerGame.ViewModel
     public class MainViewModel : ObservableObject
     {
         private const double TicksPerSecond = 1;
-        private const double GrowthIntervalInSeconds = 5;
 
         private IResourceCache _woodCache;
         private bool _canUpgradeLumbermill;
@@ -25,7 +24,7 @@ namespace ClickerGame.ViewModel
             _loop = new GameLoop(TicksPerSecond);
             _loop.Tick += () =>
             {
-                Lumbermill.Generate(TicksPerSecond * GrowthIntervalInSeconds);
+                Lumbermill.Generate(TicksPerSecond);
                 UpdateCanUpgradeLumbermill();
             };
             _loop.Start();
