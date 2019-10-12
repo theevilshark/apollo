@@ -31,12 +31,19 @@ namespace ClickerGame
             var viewModel = new MainViewModel();
             InitializeComponent();
             Loaded += OnWindowLoaded;
+            SizeChanged += OnSizeChanged;
             DataContext = viewModel;
+        }
+
+        private void OnSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (woodManager != null)
+                woodManager.RefreshAnimationParameters();
         }
 
         private void OnWindowLoaded(object sender, RoutedEventArgs e)
         {
-            woodManager = new ButtonManager(WoodButton, this, 2);
+            woodManager = new ButtonManager(WoodButton, 2);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
@@ -16,13 +11,27 @@ namespace ClickerGame
         public DispatcherTimer Timer;
         private readonly Button buttonControl;
 
-        public ButtonManager(Button button, MainWindow window, int timeInSeconds = 5)
+        public ButtonManager(Button button, int timeInSeconds = 5)
         {
             Timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(timeInSeconds) };
             buttonControl = button;
-            window.SizeChanged += OnWindowSizeChanged;
             Timer.Tick += Timer_Tick;
             SetButtonAnimation();
+        }
+
+        public void RefreshAnimationParameters()
+        {
+            // TODO Needs further consideration for resizing mid animation to adjust that single instance.
+            if (Timer.IsEnabled)
+                Timer.Tick += handler;
+            else
+                ResetButtonWidthAnimation();
+
+            void handler(object sender, EventArgs e)
+            {
+                ResetButtonWidthAnimation();
+                Timer.Tick -= handler;
+            }
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -43,9 +52,6 @@ namespace ClickerGame
             };
         }
 
-        private void OnWindowSizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            ButtonWidthAnimation.To = buttonControl.ActualWidth;
-        }
+        private void ResetButtonWidthAnimation() => ButtonWidthAnimation.To = buttonControl.ActualWidth;
     }
 }
