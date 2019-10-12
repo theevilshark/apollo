@@ -24,7 +24,7 @@ namespace ClickerGame.ViewModel
             _loop = new GameLoop(TicksPerSecond);
             _loop.Tick += () =>
             {
-                Lumbermill.Generate(TicksPerSecond);
+                Lumbermill.Generate(1 / TicksPerSecond);
                 UpdateCanUpgradeLumbermill();
             };
             _loop.Start();
