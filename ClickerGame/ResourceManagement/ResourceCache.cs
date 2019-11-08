@@ -1,4 +1,4 @@
-﻿using System;
+﻿using ResourceManagement.Exceptions;
 
 namespace ResourceManagement
 {
@@ -9,7 +9,7 @@ namespace ResourceManagement
         public void Apply(IResourceAdjustment adjustment)
         {
             if (Quantity + adjustment.Quantity < 0)
-                throw new Exception("Insufficient resources");
+                throw new InsufficientResourceException("Insufficient resources");
 
             Quantity += adjustment.Quantity;
         }

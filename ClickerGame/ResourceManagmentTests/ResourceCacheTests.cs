@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 using ResourceManagement;
-using System;
+using ResourceManagement.Exceptions;
 using System.Linq;
 
 namespace ResourceManagmentTests
@@ -31,7 +31,7 @@ namespace ResourceManagmentTests
 
                 var resourceCache = new ResourceCache();
 
-                Assert.Throws<Exception>(() => resourceCache.Apply(adjustment));
+                Assert.Throws<InsufficientResourceException>(() => resourceCache.Apply(adjustment));
             }
 
             [TestCase(15.7)]
